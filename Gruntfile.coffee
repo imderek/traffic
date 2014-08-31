@@ -4,7 +4,7 @@ module.exports = (grunt) ->
     coffee: {
       compile: {
         files: {
-          'build/<%= pkg.name %>.js': ['src/*.coffee']
+          'build/javascripts/<%= pkg.name %>.js': ['src/javascripts/*.coffee']
         }
       }
     },
@@ -13,8 +13,8 @@ module.exports = (grunt) ->
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
-        src: 'build/<%= pkg.name %>.js',
-        dest: 'build/<%= pkg.name %>.min.js'
+        src: 'build/javascripts/<%= pkg.name %>.js',
+        dest: 'build/javascripts/<%= pkg.name %>.min.js'
       }
     }
   }

@@ -1,10 +1,6 @@
 (function() {
   $(function() {
-    window.world = new World;
-    return setInterval(function() {
-      world.update();
-      return world.draw();
-    }, 1000 / world.fps);
+    return window.world = new World;
   });
 
 }).call(this);
