@@ -22,6 +22,7 @@ module.exports = (grunt) ->
   # plugins
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-uglify')
+  grunt.loadNpmTasks('grunt-contrib-watch')
 
   # default tasks
   grunt.registerTask('default', ['coffee', 'uglify'])
