@@ -4,7 +4,7 @@ module.exports = (grunt) ->
     coffee: {
       compile: {
         files: {
-          'build/javascripts/<%= pkg.name %>.js': ['src/javascripts/*.coffee']
+          'build/javascripts/<%= pkg.name %>.js': ['src/coffeescripts/*.coffee']
         }
       }
     },
