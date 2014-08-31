@@ -6,6 +6,12 @@ class @Car
     @x = @y = 0
     @velocity = Math.floor((Math.random() * 4) + 1)
     @size = 15
+
+  update: =>
+    if @has_reached_end_of_road()
+        @leave_road()
+    else if @can_move_forward()
+        @move_along_road()
     
   enter_road: (road) =>
     @road = road
@@ -15,17 +21,10 @@ class @Car
   leave_road: =>
     @active = false
     @road.cars.pop()
-    console.log "leaving road"
     
   has_reached_end_of_road: =>
     @x >= @road.x_end and
     @y >= @road.y_end
-
-  update: =>
-    if @has_reached_end_of_road()
-        @leave_road()
-    else if @can_move_forward()
-        @move_along_road()
   
   can_move_forward: =>
     @active and @road.active

@@ -5,10 +5,10 @@
     function Car() {
       this.move_along_road = __bind(this.move_along_road, this);
       this.can_move_forward = __bind(this.can_move_forward, this);
-      this.update = __bind(this.update, this);
       this.has_reached_end_of_road = __bind(this.has_reached_end_of_road, this);
       this.leave_road = __bind(this.leave_road, this);
       this.enter_road = __bind(this.enter_road, this);
+      this.update = __bind(this.update, this);
       this.active = true;
       this.color = "rgba(39,127,182,1)";
       this.road = null;
@@ -16,6 +16,14 @@
       this.velocity = Math.floor((Math.random() * 4) + 1);
       this.size = 15;
     }
+
+    Car.prototype.update = function() {
+      if (this.has_reached_end_of_road()) {
+        return this.leave_road();
+      } else if (this.can_move_forward()) {
+        return this.move_along_road();
+      }
+    };
 
     Car.prototype.enter_road = function(road) {
       this.road = road;
@@ -25,20 +33,11 @@
 
     Car.prototype.leave_road = function() {
       this.active = false;
-      this.road.cars.pop();
-      return console.log("leaving road");
+      return this.road.cars.pop();
     };
 
     Car.prototype.has_reached_end_of_road = function() {
       return this.x >= this.road.x_end && this.y >= this.road.y_end;
-    };
-
-    Car.prototype.update = function() {
-      if (this.has_reached_end_of_road()) {
-        return this.leave_road();
-      } else if (this.can_move_forward()) {
-        return this.move_along_road();
-      }
     };
 
     Car.prototype.can_move_forward = function() {
@@ -87,7 +86,7 @@
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   this.Road = (function() {
-    function Road(x_start, x_end, y_start, y_end) {
+    function Road(x_start, x_end, y_start, y_end, angle) {
       if (x_start == null) {
         x_start = 100;
       }
@@ -99,6 +98,9 @@
       }
       if (y_end == null) {
         y_end = 100;
+      }
+      if (angle == null) {
+        angle = 0;
       }
       this.events = __bind(this.events, this);
       this.draw = __bind(this.draw, this);
@@ -166,9 +168,11 @@
       var x_end, x_start, y_end, y_start;
       this.roads.push(new Road(x_start = 210, x_end = 290, y_start = 30, y_end = 650));
       this.roads.push(new Road(x_start = 380, x_end = 460, y_start = 30, y_end = 650));
-      this.roads.push(new Road(x_start = 50, x_end = 600, y_start = 175, y_end = 175));
-      this.roads.push(new Road(x_start = 70, x_end = 620, y_start = 320, y_end = 320));
-      return this.roads.push(new Road(x_start = 90, x_end = 640, y_start = 465, y_end = 465));
+      this.roads.push(new Road(x_start = 550, x_end = 630, y_start = 30, y_end = 650));
+      this.roads.push(new Road(x_start = 720, x_end = 800, y_start = 30, y_end = 650));
+      this.roads.push(new Road(x_start = 50, x_end = 900, y_start = 175, y_end = 175));
+      this.roads.push(new Road(x_start = 70, x_end = 920, y_start = 330, y_end = 330));
+      return this.roads.push(new Road(x_start = 90, x_end = 940, y_start = 485, y_end = 485));
     };
 
     World.prototype.update = function() {

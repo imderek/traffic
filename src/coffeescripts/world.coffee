@@ -13,10 +13,12 @@ class @World
     # north to south
     @roads.push new Road(x_start = 210, x_end = 290, y_start = 30, y_end = 650)
     @roads.push new Road(x_start = 380, x_end = 460, y_start = 30, y_end = 650)
+    @roads.push new Road(x_start = 550, x_end = 630, y_start = 30, y_end = 650)
+    @roads.push new Road(x_start = 720, x_end = 800, y_start = 30, y_end = 650)
     # west to east
-    @roads.push new Road(x_start = 50, x_end = 600, y_start = 175, y_end = 175)
-    @roads.push new Road(x_start = 70, x_end = 620, y_start = 320, y_end = 320)
-    @roads.push new Road(x_start = 90, x_end = 640, y_start = 465, y_end = 465)
+    @roads.push new Road(x_start = 50, x_end = 900, y_start = 175, y_end = 175)
+    @roads.push new Road(x_start = 70, x_end = 920, y_start = 330, y_end = 330)
+    @roads.push new Road(x_start = 90, x_end = 940, y_start = 485, y_end = 485)
   
   update: ->
     # update existing cars

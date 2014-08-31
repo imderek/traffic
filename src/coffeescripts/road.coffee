@@ -1,5 +1,5 @@
 class @Road
-  constructor: (x_start = 100, x_end = 650, y_start = 100, y_end = 100) ->
+  constructor: (x_start = 100, x_end = 650, y_start = 100, y_end = 100, angle = 0) ->
     @active = true
     @cars = []
     @x_start = x_start

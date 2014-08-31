@@ -16,6 +16,15 @@ module.exports = (grunt) ->
         src: 'build/javascripts/<%= pkg.name %>.js',
         dest: 'build/javascripts/<%= pkg.name %>.min.js'
       }
+    },
+    watch: {
+      css: {
+        files: 'src/coffeescripts/*.coffee',
+        tasks: ['coffee'],
+        options: {
+          livereload: true,
+        },
+      },
     }
   }
 
