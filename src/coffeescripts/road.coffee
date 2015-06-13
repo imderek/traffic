@@ -6,18 +6,17 @@ class @Road
     @x_end = x_end
     @y_start = y_start
     @y_end = y_end
+    @id = "#{@x_start}#{@y_start}#{@x_end}#{@y_end}"
+    @el = null
     @events()
       
   draw: =>
-    world.canvas.lineWidth = 8
-    world.canvas.lineCap = "round"
-    world.canvas.strokeStyle = "#888"
+    world.canvas.lineWidth = 26
+    world.canvas.lineCap = "square"
+    world.canvas.strokeStyle = "#444"
     world.canvas.beginPath()
     world.canvas.moveTo @x_start, @y_start
     world.canvas.lineTo @x_end, @y_end
     world.canvas.stroke()
       
   events: =>
-    # click the canvas to toggle road active status
-    $("canvas").on "click", =>
-      @active = if @active then false else true

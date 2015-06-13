@@ -1,24 +1,26 @@
 class @World
   constructor: () ->
-    @canvas_width = $(window).width()
-    @canvas_height = $(window).height() - 4
+    @canvas_width = 600 # $(window).width()
+    @canvas_height = 600 # $(window).height()
     @fps = 60
     @canvas_element = $("<canvas width='" + @canvas_width + "' height='" + @canvas_height + "'></canvas");
     @canvas = @canvas_element.get(0).getContext("2d")
-    @canvas_element.appendTo('body')
+    @canvas_element.prependTo('body')
     @roads = []
     @build_roads()
+    @build_intersections()
 
   build_roads: =>
     # north to south
-    @roads.push new Road(x_start = 210, x_end = 290, y_start = 30, y_end = 650)
-    @roads.push new Road(x_start = 380, x_end = 460, y_start = 30, y_end = 650)
-    @roads.push new Road(x_start = 550, x_end = 630, y_start = 30, y_end = 650)
-    @roads.push new Road(x_start = 720, x_end = 800, y_start = 30, y_end = 650)
+    @roads.push new Road(x_start = 300, x_end = 300, y_start = 50, y_end = 550)
     # west to east
-    @roads.push new Road(x_start = 50, x_end = 900, y_start = 175, y_end = 175)
-    @roads.push new Road(x_start = 70, x_end = 920, y_start = 330, y_end = 330)
-    @roads.push new Road(x_start = 90, x_end = 940, y_start = 485, y_end = 485)
+    @roads.push new Road(x_start = 50, x_end = 550, y_start = 300, y_end = 300)
+
+  build_intersections: =>
+    if Intersection.roads_do_intersect @roads[0], @roads[1]
+      intersection = new Intersection @roads[0], @roads[1]
+      for road in @roads
+        window.intersection = road.intersection = intersection
   
   update: ->
     # update existing cars
@@ -32,7 +34,6 @@ class @World
       # at a time
       if road.cars.length == 0
         car = new Car
-        road.cars.push car
         car.enter_road road
     
   draw: ->
@@ -41,6 +42,8 @@ class @World
     # draw roads
     for road in @roads
       road.draw()
+    # draw intersection
+    intersection.draw()
     # draw cars
     for road in @roads
       for car in road.cars

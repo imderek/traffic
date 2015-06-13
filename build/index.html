@@ -1,7 +1,28 @@
 <html>
 <head>
   <title>Traffic</title>
-  <style>* { margin: 0; padding: 0; }</style>
+  <style>
+    * { margin: 0; padding: 0; }
+    body {
+      background: #fff;
+    }
+    canvas {
+
+    }
+    button {
+      margin-right: 1em;
+      padding: 10;
+      background: #fff;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+      button:active, button:focus {
+        outline: none;
+      }
+      button:active {
+        background-color: #eee;
+      }
+  </style>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="javascripts/traffic.js"></script>
   <script type="text/javascript" src="http://localhost:35729/livereload.js"></script>
