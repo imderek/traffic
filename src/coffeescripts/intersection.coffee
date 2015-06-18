@@ -6,18 +6,25 @@ class @Intersection
     @y = 0
     @set_intersection_position @road_a, @road_b
     @active_road = road_a
-    @stopped_road = road_b
+    @stopped_roads = [road_b]
     @start_toggle_timer()
 
   start_toggle_timer: =>
     setInterval =>
       @toggle()
-    , 3000
+    , 4000
 
   toggle: =>
+    # stop active road
     currently_active = @active_road
-    @active_road = @stopped_road
-    @stopped_road = currently_active
+    @active_road = null
+    @stopped_roads.push currently_active
+
+    # wait N milliseconds before making new road active
+    setTimeout =>
+      @active_road = @stopped_roads[0]
+      @stopped_roads = [currently_active]
+    , 1500
 
   set_intersection_position: (road_a, road_b) =>
     line1StartX = road_a.x_start
@@ -60,7 +67,7 @@ class @Intersection
 
   draw: =>
     @draw_stopped()
-    @draw_active()
+    @draw_active() if @active_road
 
   draw_stopped: =>
     world.canvas.lineWidth = 4
@@ -68,37 +75,38 @@ class @Intersection
     world.canvas.strokeStyle = "#d24b35"
     world.canvas.beginPath()
 
-    # red line
-    angle = Math.atan2(@stopped_road.y_start - @y, @stopped_road.x_start - @x)
-    move_x = Math.cos(angle) * 80
-    move_y = Math.sin(angle) * 80
-    new_x = @x + move_x
-    new_y = @y + move_y
-    world.canvas.moveTo new_x, new_y
+    for stopped_road in @stopped_roads
+      # red line
+      angle = Math.atan2(stopped_road.y_start - @y, stopped_road.x_start - @x)
+      move_x = Math.cos(angle) * 80
+      move_y = Math.sin(angle) * 80
+      new_x = @x + move_x
+      new_y = @y + move_y
+      world.canvas.moveTo new_x, new_y
 
-    angle = Math.atan2(@y - new_y, @x - new_x)
-    move_x = Math.cos(angle) * 60
-    move_y = Math.sin(angle) * 60
-    new_x = new_x + move_x
-    new_y = new_y + move_y
-    world.canvas.lineTo new_x, new_y
-    world.canvas.stroke()
+      angle = Math.atan2(@y - new_y, @x - new_x)
+      move_x = Math.cos(angle) * 60
+      move_y = Math.sin(angle) * 60
+      new_x = new_x + move_x
+      new_y = new_y + move_y
+      world.canvas.lineTo new_x, new_y
+      world.canvas.stroke()
 
-    # red line
-    angle = Math.atan2(@stopped_road.y_end - @y, @stopped_road.x_end - @x)
-    move_x = Math.cos(angle) * 80
-    move_y = Math.sin(angle) * 80
-    new_x = @x + move_x
-    new_y = @y + move_y
-    world.canvas.moveTo new_x, new_y
+      # red line
+      angle = Math.atan2(stopped_road.y_end - @y, stopped_road.x_end - @x)
+      move_x = Math.cos(angle) * 80
+      move_y = Math.sin(angle) * 80
+      new_x = @x + move_x
+      new_y = @y + move_y
+      world.canvas.moveTo new_x, new_y
 
-    angle = Math.atan2(@y - new_y, @x - new_x)
-    move_x = Math.cos(angle) * 60
-    move_y = Math.sin(angle) * 60
-    new_x = new_x + move_x
-    new_y = new_y + move_y
-    world.canvas.lineTo new_x, new_y
-    world.canvas.stroke()
+      angle = Math.atan2(@y - new_y, @x - new_x)
+      move_x = Math.cos(angle) * 60
+      move_y = Math.sin(angle) * 60
+      new_x = new_x + move_x
+      new_y = new_y + move_y
+      world.canvas.lineTo new_x, new_y
+      world.canvas.stroke()
 
   draw_active: =>
     world.canvas.lineWidth = 4

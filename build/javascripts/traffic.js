@@ -117,7 +117,7 @@
       this.y = 0;
       this.set_intersection_position(this.road_a, this.road_b);
       this.active_road = road_a;
-      this.stopped_road = road_b;
+      this.stopped_roads = [road_b];
       this.start_toggle_timer();
     }
 
@@ -126,14 +126,20 @@
         return function() {
           return _this.toggle();
         };
-      })(this), 3000);
+      })(this), 4000);
     };
 
     Intersection.prototype.toggle = function() {
       var currently_active;
       currently_active = this.active_road;
-      this.active_road = this.stopped_road;
-      return this.stopped_road = currently_active;
+      this.active_road = null;
+      this.stopped_roads.push(currently_active);
+      return setTimeout((function(_this) {
+        return function() {
+          _this.active_road = _this.stopped_roads[0];
+          return _this.stopped_roads = [currently_active];
+        };
+      })(this), 1500);
     };
 
     Intersection.prototype.set_intersection_position = function(road_a, road_b) {
@@ -173,41 +179,49 @@
 
     Intersection.prototype.draw = function() {
       this.draw_stopped();
-      return this.draw_active();
+      if (this.active_road) {
+        return this.draw_active();
+      }
     };
 
     Intersection.prototype.draw_stopped = function() {
-      var angle, move_x, move_y, new_x, new_y;
+      var angle, move_x, move_y, new_x, new_y, stopped_road, _i, _len, _ref, _results;
       world.canvas.lineWidth = 4;
       world.canvas.lineCap = "round";
       world.canvas.strokeStyle = "#d24b35";
       world.canvas.beginPath();
-      angle = Math.atan2(this.stopped_road.y_start - this.y, this.stopped_road.x_start - this.x);
-      move_x = Math.cos(angle) * 80;
-      move_y = Math.sin(angle) * 80;
-      new_x = this.x + move_x;
-      new_y = this.y + move_y;
-      world.canvas.moveTo(new_x, new_y);
-      angle = Math.atan2(this.y - new_y, this.x - new_x);
-      move_x = Math.cos(angle) * 60;
-      move_y = Math.sin(angle) * 60;
-      new_x = new_x + move_x;
-      new_y = new_y + move_y;
-      world.canvas.lineTo(new_x, new_y);
-      world.canvas.stroke();
-      angle = Math.atan2(this.stopped_road.y_end - this.y, this.stopped_road.x_end - this.x);
-      move_x = Math.cos(angle) * 80;
-      move_y = Math.sin(angle) * 80;
-      new_x = this.x + move_x;
-      new_y = this.y + move_y;
-      world.canvas.moveTo(new_x, new_y);
-      angle = Math.atan2(this.y - new_y, this.x - new_x);
-      move_x = Math.cos(angle) * 60;
-      move_y = Math.sin(angle) * 60;
-      new_x = new_x + move_x;
-      new_y = new_y + move_y;
-      world.canvas.lineTo(new_x, new_y);
-      return world.canvas.stroke();
+      _ref = this.stopped_roads;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        stopped_road = _ref[_i];
+        angle = Math.atan2(stopped_road.y_start - this.y, stopped_road.x_start - this.x);
+        move_x = Math.cos(angle) * 80;
+        move_y = Math.sin(angle) * 80;
+        new_x = this.x + move_x;
+        new_y = this.y + move_y;
+        world.canvas.moveTo(new_x, new_y);
+        angle = Math.atan2(this.y - new_y, this.x - new_x);
+        move_x = Math.cos(angle) * 60;
+        move_y = Math.sin(angle) * 60;
+        new_x = new_x + move_x;
+        new_y = new_y + move_y;
+        world.canvas.lineTo(new_x, new_y);
+        world.canvas.stroke();
+        angle = Math.atan2(stopped_road.y_end - this.y, stopped_road.x_end - this.x);
+        move_x = Math.cos(angle) * 80;
+        move_y = Math.sin(angle) * 80;
+        new_x = this.x + move_x;
+        new_y = this.y + move_y;
+        world.canvas.moveTo(new_x, new_y);
+        angle = Math.atan2(this.y - new_y, this.x - new_x);
+        move_x = Math.cos(angle) * 60;
+        move_y = Math.sin(angle) * 60;
+        new_x = new_x + move_x;
+        new_y = new_y + move_y;
+        world.canvas.lineTo(new_x, new_y);
+        _results.push(world.canvas.stroke());
+      }
+      return _results;
     };
 
     Intersection.prototype.draw_active = function() {
