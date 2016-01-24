@@ -346,11 +346,14 @@
 
 (function() {
   $(function() {
+    var update_and_draw_world;
     window.world = new World;
-    return setInterval(function() {
-      world.update();
-      return world.draw();
-    }, 1000 / world.fps);
+    update_and_draw_world = function() {
+      window.world.update();
+      window.world.draw();
+      requestAnimationFrame(update_and_draw_world);
+    };
+    return requestAnimationFrame(update_and_draw_world);
   });
 
 }).call(this);
@@ -364,7 +367,6 @@
       this.build_roads = __bind(this.build_roads, this);
       this.canvas_width = 600;
       this.canvas_height = 600;
-      this.fps = 60;
       this.canvas_element = $("<canvas width='" + this.canvas_width + "' height='" + this.canvas_height + "'></canvas");
       this.canvas = this.canvas_element.get(0).getContext("2d");
       this.canvas_element.prependTo('body');

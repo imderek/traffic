@@ -2,7 +2,6 @@ class @World
   constructor: () ->
     @canvas_width = 600 # $(window).width()
     @canvas_height = 600 # $(window).height()
-    @fps = 60
     @canvas_element = $("<canvas width='" + @canvas_width + "' height='" + @canvas_height + "'></canvas");
     @canvas = @canvas_element.get(0).getContext("2d")
     @canvas_element.prependTo('body')
