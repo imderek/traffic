@@ -14,7 +14,7 @@
       this.color = "rgba(39,127,182,1)";
       this.road = null;
       this.x = this.y = 0;
-      this.velocity = Math.floor((Math.random() * 3) + 1);
+      this.velocity = Math.floor((Math.random() * 3) + 3);
       this.size = 6;
       this.intersection_buffer_distance = 100;
     }

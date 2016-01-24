@@ -1,3 +1,6 @@
+# TODO:
+# 1. detect collisions, keep count
+
 class @World
   constructor: () ->
     @canvas_width = 600 # $(window).width()

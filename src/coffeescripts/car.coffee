@@ -3,7 +3,9 @@ class @Car
     @color = "rgba(39,127,182,1)"
     @road = null
     @x = @y = 0
-    @velocity = Math.floor((Math.random() * 3) + 1)
+    # TODO: split values into logical pieces (min, max).
+    #       resort to default values only if no input given.
+    @velocity = Math.floor((Math.random() * 3) + 3)
     @size = 6
     @intersection_buffer_distance = 100
     
